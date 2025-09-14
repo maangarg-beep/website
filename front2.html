@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Rentables</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: #111;
+      color: white;
+    }
+
+    header {
+      top: 0;
+      z-index: 100;
+      background: linear-gradient(to right, #00c6ff, #0072ff);
+      padding: 10px 20px;
+      text-align: center;
+      font-size: 2.5rem;
+    }
+
+    .profile-button {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1000;
+      background-color: #00aaff;
+      border-radius: 20px;
+      padding: 7.5px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1rem;
+    }
+
+    .search-bar-container {
+      margin: 20px auto;
+      text-align: center;
+    }
+
+    #searchInput {
+      padding: 10px;
+      border-radius: 8px;
+      width: 220px;
+      font-size: 1rem;
+    }
+
+    .card-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 20px;
+      padding: 40px 20px;
+      justify-items: center;
+    }
+
+    .listing-card {
+      width: 100%;
+      max-width: 300px;
+      background-color: #1f1f1f;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      transition: transform 0.3s ease;
+    }
+
+    .listing-card:hover {
+      transform: scale(1.03);
+    }
+
+    .listing-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-top-left-radius: 16px;
+      border-top-right-radius: 16px;
+    }
+
+    .listing-card h2 {
+      font-size: 1.4rem;
+      margin: 10px 0 5px;
+    }
+
+    .listing-card p {
+      font-size: 0.95rem;
+      color: #ccc;
+      padding: 0 10px 15px;
+    }
+
+    .card-link {
+      display: block;
+      text-decoration: none;
+      color: inherit;
+      height: 100%;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+
+  <a href="profile2.html" class="profile-button">👤</a>
+  <header>🛒 Rentables</header>
+
+  <div class="search-bar-container">
+    <input id="searchInput" type="text" placeholder="Search listings...">
+  </div>
+
+  <div class="card-container" id="cardContainer"></div>
+
+  <script>
+    const cardContainer = document.getElementById("cardContainer");
+
+    const userListings = JSON.parse(localStorage.getItem("userListings") || "[]");
+
+    userListings.forEach(listing => {
+      const card = document.createElement("div");
+      card.className = "listing-card";
+      card.innerHTML = `
+        <a href="listing.html?id=${listing.id}" class="card-link">
+          <img src="${listing.image}" alt="${listing.title}" />
+          <h2>${listing.title}</h2>
+          <p>${listing.description}</p>
+        </a>
+      `;
+      cardContainer.appendChild(card);
+    });
+
+    const curatedListings = [
+      {
+        href: "snake.html",
+        img: "https://www.rainforesttrust.org/app/uploads/2024/07/Cobra-by-Skynavin-1920x1300-shutterstock_688611442-aspect-ratio-1000-715.webp",
+        title: "Snake",
+        desc: "Trained to kill if not returned on time. It is a beautiful snake that is very long and cna perform many tasks, such as just being there."
+      },
+      {
+        href: "tank.html",
+        img: "https://www.defensenews.com/resizer/v2/6F6VF25GCFF2HFJCOITRJSGNPE.jpg?auth=103b2edcf6760e81449706ff797c6c1113d3b1085af3f4075a2679a76937250b&width=1024&height=768",
+        title: "Tank",
+        desc: "Literally a tank. Kill responsibly. This tank has a long history of having a kill-death ratio of 1031:0. It does not include flight capabilities (rented sperately)."
+      },
+      {
+        href: "PS5.html",
+        img: "https://reebelo.com.au/_next/image?url=https%3A%2F%2Fcdn.reebelo.com%2Fpim%2Fproducts%2FP-SONYPLAYSTATION5GAMINGCONSOLEDISCEDITION%2FWHT-image-1.jpg&w=640&q=75",
+        title: "PS5",
+        desc: "Gaming console for playing games or something, IDK. Each day is counted as one game. You can bring a friend along with you as it is a two player game, or you could vs me."
+      }
+    ];
+
+    curatedListings.forEach(listing => {
+      const card = document.createElement("div");
+      card.className = "listing-card";
+      card.innerHTML = `
+        <a href="${listing.href}" class="card-link">
+          <img src="${listing.img}" alt="${listing.title}" />
+          <h2>${listing.title}</h2>
+          <p>${listing.desc}</p>
+        </a>
+      `;
+      cardContainer.appendChild(card);
+    });
+
+    document.getElementById('searchInput').addEventListener('input', function() {
+      const query = this.value.toLowerCase();
+      document.querySelectorAll('.listing-card').forEach(card => {
+        const text = card.textContent.toLowerCase();
+        card.style.display = text.includes(query) ? '' : 'none';
+      });
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rental</title>
+  <style>
+    :root {
+      --background-image: url('https://i.ibb.co/8gG2pwXC/Screenshot-2025-09-10-200843.png');
+      --background-color: #101010; 
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background: var(--background-color) var(--background-image) no-repeat center center;
+      background-size: cover;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    .top-left-buttons {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      display: flex;
+      gap: 15px;
+      z-index: 10;
+    }
+
+    .top-left-buttons button {
+      padding: 10px 22px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 6px;
+      background: transparent;
+      color: #fff;
+      cursor: pointer;
+      border: 1px solid #fff;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .top-left-buttons button:hover {
+      background: #fff;
+      color: #101010;
+    }
+
+    @keyframes rainbow {
+      0% {background-position: 0% 50%;}
+      50% {background-position: 100% 50%;}
+      100% {background-position: 0% 50%;}
+    }
+
+    button {
+      padding: 15px 30px;
+      font-size: 1.2rem;
+      border: none;
+      border-radius: 8px;
+      background-color: #ffffffcc;
+      color: #333;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #fff;
+      box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.7);
+    }
+  </style>
+</head>
+<body>
+  <div class="top-left-buttons">
+    <a href="sign_up.html" style="text-decoration:none;">
+      <button>Register Now</button>
+    </a>
+    <a href="sign_in2.html" style="text-decoration:none;">
+      <button>Login</button>
+    </a>
+  </div>
+</body>
+</html>

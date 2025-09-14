@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Rent PS5</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/litepicker/dist/css/litepicker.css" />
+  <style>
+    body {
+      background: #1e1e1e;
+      font-family: Arial, sans-serif;
+      color: #fff;
+      padding: 40px;
+      margin: 0;
+    }
+
+    .back-btn {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        background-color: #00aaff;
+        color: #fff;
+        border: none;
+        border-radius: 20px;
+        padding: 10px 20px;
+        font-weight: bold;
+        cursor: pointer;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        transition: background-color 0.3s;
+    }
+        .back-btn:hover {
+        background-color: #0088cc;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: auto;
+      background: #2e2e2e;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(255,255,255,0.2);
+    }
+
+    .container img {
+      width: 100%;
+      border-radius: 10px;
+    }
+
+    h1 {
+      margin-top: 20px;
+      font-size: 2rem;
+      text-align: center;
+    }
+
+    label {
+      display: block;
+      margin-top: 20px;
+      font-weight: bold;
+    }
+
+    #datepicker {
+      width: 100%;
+      padding: 12px;
+      margin-top: 5px;
+      border-radius: 6px;
+      border: none;
+      background: #3e3e3e;
+      color: #fff;
+    }
+
+    .output {
+      margin-top: 15px;
+      text-align: center;
+      font-size: 1.2rem;
+      color: #00ffcc;
+    }
+    #userBalanceBox {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: #ffffff;
+      color: #333;
+      font-weight: bold;
+      font-family: sans-serif;
+      font-size: 14px;
+      padding: 10px 16px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      z-index: 1000;
+    }
+
+
+    button {
+      display: block;
+      margin: 30px auto 0;
+      padding: 12px 25px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 6px;
+      background-color: #00aaff;
+      color: #fff;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #0088cc;
+    }
+
+    .litepicker .is-in-range {
+      background-color: #cceeff !important;
+    }
+  </style>
+</head>
+<body>
+    <button onclick="goBack()" class="back-btn">← Back to Marketplace</button>
+
+    <script>
+    
+    function goBack() {
+        window.history.back();
+    }</script>
+
+  <div class="container">
+    <img src="https://reebelo.com.au/_next/image?url=https%3A%2F%2Fcdn.reebelo.com%2Fpim%2Fproducts%2FP-SONYPLAYSTATION5GAMINGCONSOLEDISCEDITION%2FWHT-image-1.jpg&w=640&q=75" alt="PS5 for Rent" />
+    <h1>PS5 for Rent</h1>
+
+    <label for="datepicker">Select Rental Dates:</label>
+    <input type="text" id="datepicker" placeholder="Choose your range" readonly />
+
+    <div class="output" id="summary">Select dates to calculate cost</div>
+
+    <button onclick="submitRental()">Rent This PS5</button>
+  </div>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/litepicker/dist/bundle.js"></script>
+  <script>
+    const summary = document.getElementById('summary');
+    const ratePerDay = 30;
+
+    const today = new Date();
+    const currentMonth = today.getMonth() + 1; 
+    const currentYear = today.getFullYear();
+
+    const picker = new Litepicker({
+      element: document.getElementById('datepicker'),
+      singleMode: false,
+      numberOfMonths: 1,
+      numberOfColumns: 1,
+      autoApply: true,
+      minDate: today,
+      startMonth: currentMonth,
+      startYear: currentYear,
+      setup: (picker) => {
+        picker.on('selected', (startDate, endDate) => {
+          const days = endDate.diff(startDate, 'days') + 1;
+          summary.textContent = `${days} day${days > 1 ? 's' : ''} selected • Total: $${days * ratePerDay}`;
+        });
+      }
+    });
+
+    function submitRental() {
+        const start = picker.getStartDate();
+        const end = picker.getEndDate();
+
+        if (!start || !end) {
+            alert('Please select rental dates first!');
+        } else {
+            const days = end.diff(start, 'days') + 1;
+            const success = spendFromBalance(days * ratePerDay);
+
+            if (success) {
+                alert(`Rental submitted from ${start.format('DD/MM/YYYY')} to ${end.format('DD/MM/YYYY')} for ${days} days!`);
+            }
+        }
+    }
+  </script>
+  <div id="userBalanceBox">
+    Balance: <span id="userBalance"></span>
+  </div>
+
+  <script>
+    const balance = localStorage.getItem("userBalance");
+
+    if (balance) {
+      document.getElementById("userBalance").textContent = `$${balance}`;
+    } else {
+      document.getElementById("userBalanceBox").style.display = "none";
+    }
+  </script>
+  
+  <script>
+    function spendFromBalance(amount) {
+    let currentBalance = parseFloat(localStorage.getItem("userBalance")) || 0;
+
+    if (amount > currentBalance) {
+      alert("Insufficient balance!");
+      return false;
+    }
+
+    const newBalance = currentBalance - amount;
+    localStorage.setItem("userBalance", newBalance.toFixed(2));
+
+    const balanceDisplay = document.getElementById("userBalance");
+    if (balanceDisplay) {
+      balanceDisplay.textContent = `$${newBalance.toFixed(2)}`;
+    }
+
+    return true;
+  }
+  </script>
+
+
+</body>
+</html>

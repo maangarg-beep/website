@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sign Up Page</title>
+  <style>
+    body {
+      background: #1e1e1e;
+      font-family: Arial, sans-serif;
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .signup-container {
+      background-color: #2e2e2e;
+      padding: 40px;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(255,255,255,0.2);
+      text-align: center;
+      width: 100%;
+      max-width: 400px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      padding: 15px;
+      margin: 10px 0;
+      border: none;
+      border-radius: 6px;
+      font-size: 1rem;
+    }
+
+    button {
+      padding: 12px 25px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 6px;
+      background-color: #00aaff;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0088cc;
+    }
+
+    .message {
+      color: #44ff88;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="signup-container">
+    <h2>Sign Up</h2>
+    <form onsubmit="return handleSignup()">
+      <input type="text" id="name" placeholder="Your name" required />
+      <input type="email" id="email" placeholder="Your email" required />
+      <input type="password" id="password" placeholder="Your password" required />
+      <button type="submit">Create Account</button>
+      <div class="message" id="signupMessage"></div>
+    </form>
+  </div>
+
+  <script>
+    function handleSignup() {
+  const name = document.getElementById("name").value;
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+  const message = document.getElementById("signupMessage");
+
+  
+  if (name && email && password) {
+    localStorage.setItem("userName", name);
+    localStorage.setItem("userEmail", email);
+    localStorage.setItem("userPassword", password);
+    message.textContent = "Account created successfully!";
+    localStorage.setItem("userBalance", "50");
+    setTimeout(() => {
+      window.location.href = "front2.html";
+    }, 1000);
+    return false;
+  }
+  return false;
+}
+  </script>
+</body>
+</html>

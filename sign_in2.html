@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login Page</title>
+  <style>
+    body {
+      background: #1e1e1e;
+      font-family: Arial, sans-serif;
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .login-container {
+      background-color: #2e2e2e;
+      padding: 40px;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(255,255,255,0.2);
+      text-align: center;
+    }
+
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      padding: 15px;
+      margin: 10px 0;
+      border: none;
+      border-radius: 6px;
+      font-size: 1rem;
+    }
+
+    button {
+      padding: 12px 25px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 6px;
+      background-color: #00aaff;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0088cc;
+    }
+
+    .error {
+      color: #ff4444;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <h2>Login</h2>
+    <form onsubmit="return validateLogin()">
+      <input type="email" id="email" placeholder="Enter your email" required />
+      <input type="password" id="password" placeholder="Enter your password" required />
+      <button type="submit">Log In</button>
+      <div id="error" class="error"></div>
+      <p style="margin-top: 20px; text-align: center;">
+    Don't have an account?
+    <a href="sign_up.html" style="color: #00aaff; text-decoration: underline;">
+        Click here to sign up
+    </a>
+</p>
+
+    </form>
+  </div>
+
+  <script>
+    function validateLogin() {
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+      const errorDiv = document.getElementById("error");
+
+      const correctPassword = localStorage.getItem("userPassword");
+      const correctEmail = localStorage.getItem("userEmail");
+      const correct2Email = "maangarg@gmail.com";
+      const correct2Password = "44445678";
+      
+
+      if (email === correctEmail && password === correctPassword) {
+        errorDiv.textContent = "";
+        window.location.href = 'front2.html';
+        return false;
+      } else if (email === correct2Email && password === correct2Password) {
+        errorDiv.textContent = "";
+        window.location.href = 'front.html';
+        return false;
+      } else {
+        errorDiv.textContent = "Invalid credentials. Please try again.";
+        return false;
+      }
+    }
+  </script>
+</body>
+</html>
