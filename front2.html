@@ -116,27 +116,13 @@
   <script>
     const cardContainer = document.getElementById("cardContainer");
 
-    const userListings = JSON.parse(localStorage.getItem("userListings") || "[]");
-
-    userListings.forEach(listing => {
-      const card = document.createElement("div");
-      card.className = "listing-card";
-      card.innerHTML = `
-        <a href="listing.html?id=${listing.id}" class="card-link">
-          <img src="${listing.image}" alt="${listing.title}" />
-          <h2>${listing.title}</h2>
-          <p>${listing.description}</p>
-        </a>
-      `;
-      cardContainer.appendChild(card);
-    });
 
     const curatedListings = [
       {
         href: "snake.html",
         img: "https://www.rainforesttrust.org/app/uploads/2024/07/Cobra-by-Skynavin-1920x1300-shutterstock_688611442-aspect-ratio-1000-715.webp",
         title: "Snake",
-        desc: "Trained to kill if not returned on time. It is a beautiful snake that is very long and cna perform many tasks, such as just being there."
+        desc: "Trained to kill if not returned on time. It is a beautiful snake that is very long and can perform many tasks, such as just being there."
       },
       {
         href: "tank.html",
@@ -166,6 +152,20 @@
           <img src="${listing.img}" alt="${listing.title}" />
           <h2>${listing.title}</h2>
           <p>${listing.desc}</p>
+        </a>
+      `;
+      cardContainer.appendChild(card);
+    });
+    const userListings = JSON.parse(localStorage.getItem("userListings") || "[]");
+
+    userListings.forEach(listing => {
+      const card = document.createElement("div");
+      card.className = "listing-card";
+      card.innerHTML = `
+        <a href="listing.html?id=${listing.id}" class="card-link">
+          <img src="${listing.image}" alt="${listing.title}" />
+          <h2>${listing.title}</h2>
+          <p>${listing.description}</p>
         </a>
       `;
       cardContainer.appendChild(card);
