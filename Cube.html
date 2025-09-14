@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Rent Dragon</title>
+  <title>Rent Cube</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/litepicker/dist/css/litepicker.css" />
   <style>
     body {
@@ -12,32 +12,6 @@
       color: #fff;
       padding: 40px;
       margin: 0;
-    }
-
-    .container {
-      max-width: 600px;
-      margin: auto;
-      background: #2e2e2e;
-      padding: 30px;
-      border-radius: 12px;
-      box-shadow: 0 0 20px rgba(255,255,255,0.2);
-    }
-
-    .container img {
-      width: 100%;
-      border-radius: 10px;
-    }
-
-    h1 {
-      margin-top: 20px;
-      font-size: 2rem;
-      text-align: center;
-    }
-
-    label {
-      display: block;
-      margin-top: 20px;
-      font-weight: bold;
     }
 
     .back-btn {
@@ -57,6 +31,15 @@
     .back-btn:hover {
       background-color: #0088cc;
     }
+
+    .container {
+      max-width: 600px;
+      margin: auto;
+      background: #2e2e2e;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(255,255,255,0.2);
+    }
    
     #userBalanceBox {
       position: fixed;
@@ -73,6 +56,23 @@
       z-index: 1000;
     }
 
+
+    .container img {
+      width: 100%;
+      border-radius: 10px;
+    }
+
+    h1 {
+      margin-top: 20px;
+      font-size: 2rem;
+      text-align: center;
+    }
+
+    label {
+      display: block;
+      margin-top: 20px;
+      font-weight: bold;
+    }
 
     #datepicker {
       width: 100%;
@@ -114,29 +114,31 @@
   </style>
 </head>
 <body>
-    
     <button onclick="goBack()" class="back-btn">← Back to Marketplace</button>
+
     <script>
+    
     function goBack() {
         window.history.back();
     }</script>
 
   <div class="container">
-    <img src="https://media.licdn.com/dms/image/v2/C4D12AQFSI3q3iVULXQ/article-cover_image-shrink_600_2000/article-cover_image-shrink_600_2000/0/1559132379526?e=2147483647&v=beta&t=dQl1vg89PutvWl9T0jDpTTwopid_yY6ZlzsJR_BIPrI" alt="Dragon for Rent" />
-    <h1>Dragon for Rent</h1>
+    <img src="https://media.printables.com/media/prints/935893/images/7153672_2cc8edc1-6bea-4bec-94db-869e38aee98c_9b57978c-5952-471f-b150-2ec7d51c17a1/thumbs/inside/1280x960/jpeg/img_0244.webp" alt="Cube for Rent" />
+    <h1>Cube for Rent</h1>
 
     <label for="datepicker">Select Rental Dates:</label>
     <input type="text" id="datepicker" placeholder="Choose your range" readonly />
 
     <div class="output" id="summary">Select dates to calculate cost</div>
 
-    <button onclick="submitRental()">Rent This Dragon</button>
+    <button onclick="submitRental()">Rent This Cube</button>
   </div>
+
 
   <script src="https://cdn.jsdelivr.net/npm/litepicker/dist/bundle.js"></script>
   <script>
     const summary = document.getElementById('summary');
-    const ratePerDay = 5;
+    const ratePerDay = 15;
 
     const today = new Date();
     const currentMonth = today.getMonth() + 1; 
@@ -189,7 +191,6 @@
       document.getElementById("userBalanceBox").style.display = "none";
     }
   </script>
-
   
   <script>
     function spendFromBalance(amount) {
@@ -198,6 +199,7 @@
     if (amount > currentBalance) {
       alert("Insufficient balance!");
       return false;
+    
     }
 
     const newBalance = currentBalance - amount;
@@ -206,6 +208,7 @@
     const balanceDisplay = document.getElementById("userBalance");
     if (balanceDisplay) {
       balanceDisplay.textContent = `$${newBalance.toFixed(2)}`;
+      
     }
 
     return true;
