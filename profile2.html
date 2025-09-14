@@ -132,7 +132,7 @@
     <h2>Settings</h2>
     <p><a href="#" style="color:#00c6ff;">Edit Profile</a></p>
     <p><a href="#" style="color:#00c6ff;">Notification Preferences</a></p>
-    <p><a href="main2.html" style="color:#00c6ff;">Sign out</a></p>
+    <p><a href="index.html" style="color:#00c6ff;">Sign out</a></p>
     <button onclick="resetUserData()" style="margin-top:20px;">Delete My Account</button>
     <br> <br>
     <button onclick="logoutUser()">Reset</button>
@@ -208,12 +208,12 @@
       localStorage.setItem("userListings", JSON.stringify(updated));
 
       alert("Your account has been deleted");
-      window.location.href = "main2.html";
+      window.location.href = "index.html";
     }
 
     function logoutUser() {
           localStorage.clear();
-          window.location.href = "main2.html";
+          window.location.href = "index.html";
         }
 
     const listings = JSON.parse(localStorage.getItem("userListings") || "[]");
