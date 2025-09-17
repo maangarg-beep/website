@@ -161,20 +161,45 @@
       }
     });
 
+    function logRental(title, image, description, startDate, endDate, totalCost) {
+      const rentings = JSON.parse(localStorage.getItem("userRentings") || "[]");
+      const newRental = {
+        id: Date.now(),
+        title,
+        image,
+        description,
+        start: startDate.format('DD/MM/YYYY'),
+        end: endDate.format('DD/MM/YYYY'),
+        cost: totalCost
+      };
+      rentings.push(newRental);
+      localStorage.setItem("userRentings", JSON.stringify(rentings));
+    }
+
     function submitRental() {
-        const start = picker.getStartDate();
-        const end = picker.getEndDate();
+      const start = picker.getStartDate();
+      const end = picker.getEndDate();
 
-        if (!start || !end) {
-            alert('Please select rental dates first!');
-        } else {
-            const days = end.diff(start, 'days') + 1;
-            const success = spendFromBalance(days * ratePerDay);
+      if (!start || !end) {
+        alert('Please select rental dates first!');
+      } else {
+        const days = end.diff(start, 'days') + 1;
+        const totalCost = days * ratePerDay;
+        const success = spendFromBalance(totalCost);
 
-            if (success) {
-                alert(`Rental submitted from ${start.format('DD/MM/YYYY')} to ${end.format('DD/MM/YYYY')} for ${days} days!`);
-            }
+        if (success) {
+          logRental(
+            "Cube for Rent",
+            "https://media.printables.com/media/prints/935893/images/7153672_2cc8edc1-6bea-4bec-94db-869e38aee98c_9b57978c-5952-471f-b150-2ec7d51c17a1/thumbs/inside/1280x960/jpeg/img_0244.webp",
+            "This is a 3d printed gear cube. It will provide you with copious amounts of fun and is a great rent. Do try not to break it. And do not leave it near 63 Dareen Street.",
+            start,
+            end,
+            totalCost
+          );
+
+          alert(`Rental submitted from ${start.format('DD/MM/YYYY')} to ${end.format('DD/MM/YYYY')} for ${days} days!`);
         }
+      }
     }
 
   </script>

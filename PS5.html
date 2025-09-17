@@ -160,20 +160,45 @@
       }
     });
 
+    function logRental(title, image, description, startDate, endDate, totalCost) {
+      const rentings = JSON.parse(localStorage.getItem("userRentings") || "[]");
+      const newRental = {
+        id: Date.now(),
+        title,
+        image,
+        description,
+        start: startDate.format('DD/MM/YYYY'),
+        end: endDate.format('DD/MM/YYYY'),
+        cost: totalCost
+      };
+      rentings.push(newRental);
+      localStorage.setItem("userRentings", JSON.stringify(rentings));
+    }
+
     function submitRental() {
-        const start = picker.getStartDate();
-        const end = picker.getEndDate();
+      const start = picker.getStartDate();
+      const end = picker.getEndDate();
 
-        if (!start || !end) {
-            alert('Please select rental dates first!');
-        } else {
-            const days = end.diff(start, 'days') + 1;
-            const success = spendFromBalance(days * ratePerDay);
+      if (!start || !end) {
+        alert('Please select rental dates first!');
+      } else {
+        const days = end.diff(start, 'days') + 1;
+        const totalCost = days * ratePerDay;
+        const success = spendFromBalance(totalCost);
 
-            if (success) {
-                alert(`Rental submitted from ${start.format('DD/MM/YYYY')} to ${end.format('DD/MM/YYYY')} for ${days} days!`);
-            }
+        if (success) {
+          logRental(
+            "PS5 for Rent",
+            "https://www.3brothersmobiles.com.au/cdn/shop/products/143354-games-feature-sony-playstation-5-release-date-rumours-and-everything-you-need-to-know-about-ps5-image1-cvz3adase9_1200x1200.jpg?v=1605486950",
+            "Gaming console for playing games or something, IDK. Each day is counted as one game. You can bring a friend along with you as it is a two player game, or you could vs me.",
+            start,
+            end,
+            totalCost
+          );
+
+          alert(`Rental submitted from ${start.format('DD/MM/YYYY')} to ${end.format('DD/MM/YYYY')} for ${days} days!`);
         }
+      }
     }
   </script>
   <div id="userBalanceBox">

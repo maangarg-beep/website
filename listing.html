@@ -207,6 +207,21 @@
       }
     });
 
+    function logRental(listing, startDate, endDate, totalCost) {
+      const rentings = JSON.parse(localStorage.getItem("userRentings") || "[]");
+      const newRental = {
+        id: Date.now(),
+        title: listing.title,
+        image: listing.image,
+        description: listing.description,
+        start: startDate.format('DD/MM/YYYY'),
+        end: endDate.format('DD/MM/YYYY'),
+        cost: totalCost
+      };
+      rentings.push(newRental);
+      localStorage.setItem("userRentings", JSON.stringify(rentings));
+    }
+
     function submitRental() {
       const start = picker.getStartDate();
       const end = picker.getEndDate();
@@ -214,12 +229,15 @@
         alert('Please select rental dates first!');
       } else {
         const days = end.diff(start, 'days') + 1;
-        const success = spendFromBalance(days * ratePerDay);
+        const totalCost = days * ratePerDay;
+        const success = spendFromBalance(totalCost);
         if (success) {
+          logRental(listing, start, end, totalCost);
           alert(`Rental submitted from ${start.format('DD/MM/YYYY')} to ${end.format('DD/MM/YYYY')} for ${days} days!`);
         }
       }
     }
+
   </script>
 </body>
 </html>

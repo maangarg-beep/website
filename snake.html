@@ -161,20 +161,45 @@
       }
     });
 
+    function logRental(title, image, description, startDate, endDate, totalCost) {
+      const rentings = JSON.parse(localStorage.getItem("userRentings") || "[]");
+      const newRental = {
+        id: Date.now(),
+        title,
+        image,
+        description,
+        start: startDate.format('DD/MM/YYYY'),
+        end: endDate.format('DD/MM/YYYY'),
+        cost: totalCost
+      };
+      rentings.push(newRental);
+      localStorage.setItem("userRentings", JSON.stringify(rentings));
+    }
+
     function submitRental() {
-        const start = picker.getStartDate();
-        const end = picker.getEndDate();
+      const start = picker.getStartDate();
+      const end = picker.getEndDate();
 
-        if (!start || !end) {
-            alert('Please select rental dates first!');
-        } else {
-            const days = end.diff(start, 'days') + 1;
-            const success = spendFromBalance(days * ratePerDay);
+      if (!start || !end) {
+        alert('Please select rental dates first!');
+      } else {
+        const days = end.diff(start, 'days') + 1;
+        const totalCost = days * ratePerDay;
+        const success = spendFromBalance(totalCost);
 
-            if (success) {
-                alert(`Rental submitted from ${start.format('DD/MM/YYYY')} to ${end.format('DD/MM/YYYY')} for ${days} days!`);
-            }
+        if (success) {
+          logRental(
+            "Snake for Rent",
+            "https://www.rainforesttrust.org/app/uploads/2024/07/Cobra-by-Skynavin-1920x1300-shutterstock_688611442-aspect-ratio-1000-715.webp",
+            "Trained to kill if not returned on time. It is a beautiful snake that is very long and can perform many tasks, such as just being there.",
+            start,
+            end,
+            totalCost
+          );
+
+          alert(`Rental submitted from ${start.format('DD/MM/YYYY')} to ${end.format('DD/MM/YYYY')} for ${days} days!`);
         }
+      }
     }
 
   </script>

@@ -120,6 +120,11 @@
     <div id="listingFormContainer"></div>
     <div class="listing"></div>
   </section>
+  
+  <section class="section">
+    <h2>My Rentings</h2>
+    <div class="listing" id="rentingsContainer"></div>
+  </section>
 
   <section class="section">
     <h2>Account Info</h2>
@@ -197,11 +202,31 @@
       alert("Listing removed.");
       window.location.reload();
     }
+    const rentings = JSON.parse(localStorage.getItem("userRentings") || "[]");
+    const rentingsContainer = document.getElementById("rentingsContainer");
+
+    if (rentings.length > 0 && rentingsContainer) {
+      rentingsContainer.innerHTML = "";
+      rentings.forEach(rental => {
+        const card = document.createElement("div");
+        card.className = "listing-card";
+        card.innerHTML = `
+          <img src="${rental.image}" alt="${rental.title}" />
+          <h3>${rental.title}</h3>
+          <p>${rental.description}</p>
+          <p><strong>Rented:</strong> ${rental.start} → ${rental.end}</p>
+          <p class="rate">Total Cost: $${rental.cost}</p>
+        `;
+        rentingsContainer.appendChild(card);
+      });
+    }
 
     function resetUserData() {
       localStorage.removeItem("userName");
       localStorage.removeItem("userEmail");
       localStorage.removeItem("userBalance");
+      localStorage.removeItem("rentings")
+      localStorage.removeItem("userRentings")
 
       const listings = JSON.parse(localStorage.getItem("userListings") || "[]");
       const updated = listings.map(l => ({ ...l, hiddenInProfile: true }));

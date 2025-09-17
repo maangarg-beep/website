@@ -158,21 +158,46 @@
         });
       }
     });
+    
+    function logRental(title, image, description, startDate, endDate, totalCost) {
+      const rentings = JSON.parse(localStorage.getItem("userRentings") || "[]");
+      const newRental = {
+        id: Date.now(),
+        title,
+        image,
+        description,
+        start: startDate.format('DD/MM/YYYY'),
+        end: endDate.format('DD/MM/YYYY'),
+        cost: totalCost
+      };
+      rentings.push(newRental);
+      localStorage.setItem("userRentings", JSON.stringify(rentings));
+    }
 
     function submitRental() {
-        const start = picker.getStartDate();
-        const end = picker.getEndDate();
+      const start = picker.getStartDate();
+      const end = picker.getEndDate();
 
-        if (!start || !end) {
-            alert('Please select rental dates first!');
-        } else {
-            const days = end.diff(start, 'days') + 1;
-            const success = spendFromBalance(days * ratePerDay);
+      if (!start || !end) {
+        alert('Please select rental dates first!');
+      } else {
+        const days = end.diff(start, 'days') + 1;
+        const totalCost = days * ratePerDay;
+        const success = spendFromBalance(totalCost);
 
-            if (success) {
-                alert(`Rental submitted from ${start.format('DD/MM/YYYY')} to ${end.format('DD/MM/YYYY')} for ${days} days!`);
-            }
+        if (success) {
+          logRental(
+            "Dragon for Rent",
+            "https://media.licdn.com/dms/image/v2/C4D12AQFSI3q3iVULXQ/article-cover_image-shrink_600_2000/article-cover_image-shrink_600_2000/0/1559132379526?e=2147483647&v=beta&t=dQl1vg89PutvWl9T0jDpTTwopid_yY6ZlzsJR_BIPrI",
+            "It is a dragon with no wings (I know, sad) it cannot fly you around. It is NOT trained but can be a great pet for a day or two. Be careful, he likes meat. Doesn't need much mantaining.",
+            start,
+            end,
+            totalCost
+          );
+
+          alert(`Rental submitted from ${start.format('DD/MM/YYYY')} to ${end.format('DD/MM/YYYY')} for ${days} days!`);
         }
+      }
     }
 
   </script>
